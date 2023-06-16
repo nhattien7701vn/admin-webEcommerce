@@ -1,4 +1,3 @@
-import React from 'react'
 import Chart from './Chart/Chart'
 import MangeCategories from './MangeCategories/MangeCategories'
 import MangeProducts from './MangeProducts/MangeProducts'
