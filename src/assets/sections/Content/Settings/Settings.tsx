@@ -2,8 +2,10 @@ import React from 'react'
 
 const Settings = () => {
   return (
-    <section className="flex-grow h-screen border-solid border-2">
-      Settings
+    <section className="">
+      <section className="flex justify-between w-full h-screen bg-[#909090]">
+        SETTINGS ADD LATER
+      </section>
     </section>
   )
 }
