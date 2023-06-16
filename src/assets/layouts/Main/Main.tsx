@@ -4,7 +4,7 @@ import Content from '../../sections/Content/Content'
 
 const Main = () => {
   return (
-    <main className="relative flex flex-col grow ml-[calc(250px+2rem)] border-solid border-2">
+    <main className="flex flex-col w-full pl-[calc(250px+2.1rem)]">
       <Header />
       <Content />
     </main>
