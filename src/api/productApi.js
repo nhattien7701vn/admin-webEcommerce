@@ -1,7 +1,7 @@
 import axiosClient from "./axiosClient.mjs";
-export const postApi = {
-  getAllCategory: () => {
-    const url = "/categories";
+export const productApi = {
+  getAllProduct: () => {
+    const url = "/products";
     return axiosClient.get(url);
   },
   // create:(data)=>{
@@ -12,8 +12,8 @@ export const postApi = {
   //   const url = `/posts/${id}`;
   //   return axiosClient.patch(url, data);
   // },
-  // delete:(id)=>{
-  //   const url = `/posts/${id}`;
-  //   return axiosClient.delete(url);
-  // }
+  deleteProduct: (id) => {
+    const url = `/products/${id}`;
+    return axiosClient.delete(url);
+  }
 };
