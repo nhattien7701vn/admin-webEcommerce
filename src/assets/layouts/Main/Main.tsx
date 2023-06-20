@@ -3,12 +3,13 @@ import Header from "../../sections/Header/Header.js";
 import Content from "../../sections/Content/Content.js";
 import { productApi } from "../../../api/productApi.js";
 import { categoryApi } from "../../../api/categoryApi.js";
-import { Product } from "../../sections/Content/ManageProducts/ManageProducts.js";
+import { TProduct } from "../../types/Product.js";
+import { TCategory } from "../../types/Category.js";
 
 const Main = () => {
-  const [cateData, setCateData] = useState([]);
-  const [productData, setProductData] = useState([]);
-  const [apiLoading, setApiLoading] = useState("Loading");
+  const [cateData, setCateData] = useState<[]>([]);
+  const [productData, setProductData] = useState<[]>([]);
+  const [apiLoading, setApiLoading] = useState<string>("Loading");
 
   useEffect(() => {
     fetchProductData();
@@ -34,7 +35,6 @@ const Main = () => {
   }
   function handleDeleteProduct(id: string) {
     setApiLoading("Loading");
-
     productApi.deleteProduct(id);
 
     //Xóa ở client thôi
@@ -54,9 +54,32 @@ const Main = () => {
     fetchCategoryData();
     setApiLoading("Finish");
   }
-  function handleEditProduct(product: Product) {
-    console.log(product);
+
+  function handleEditProduct(product: TProduct) {
+    setApiLoading("Loading");
+    productApi.updateProduct(product.id, product);
+    fetchProductData();
+    setApiLoading("Finish");
   }
+  function handleDuplicateProduct(product: TProduct) {
+    setApiLoading("Loading");
+    productApi.createProduct(product);
+    fetchProductData();
+    setApiLoading("Finish");
+  }
+  function handleEditCategory(category: TCategory) {
+    setApiLoading("Loading");
+    categoryApi.updateCategory(category.id, category);
+    fetchCategoryData();
+    setApiLoading("Finish");
+  }
+  function handleDuplicateCategory(category: TCategory) {
+    setApiLoading("Loading");
+    categoryApi.createCategory(category);
+    fetchCategoryData();
+    setApiLoading("Finish");
+  }
+
   return (
     <>
       {apiLoading === "Loading" ? (
@@ -72,8 +95,11 @@ const Main = () => {
             categoryData={cateData}
             productData={productData}
             handleDeleteProduct={handleDeleteProduct}
-            handleDeleteCategory={handleDeleteCategory}
             handleEditProduct={handleEditProduct}
+            handleDuplicateProduct={handleDuplicateProduct}
+            handleDeleteCategory={handleDeleteCategory}
+            handleEditCategory={handleEditCategory}
+            handleDuplicateCategory={handleDuplicateCategory}
           />
         </main>
       )}

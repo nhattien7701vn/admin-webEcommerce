@@ -5,20 +5,27 @@ import ManageCategories from "./ManageCategories/ManageCategories";
 import ManageProducts from "./ManageProducts/ManageProducts";
 import ManageUsers from "./ManageUsers/ManageUsers";
 import Settings from "./Settings/Settings";
-import { Product } from "./ManageProducts/ManageProducts";
+import { TProduct } from "../../types/Product";
+import { TCategory } from "../../types/Category";
 
 const Content: React.FC<{
   categoryData: any[];
   productData: any[];
   handleDeleteProduct: (id: string) => void;
   handleDeleteCategory: (id: string) => void;
-  handleEditProduct: (product: Product) => void;
+  handleEditProduct: (product: TProduct) => void;
+  handleDuplicateProduct: (product: TProduct) => void;
+  handleEditCategory: (category: TCategory) => void;
+  handleDuplicateCategory: (category: TCategory) => void;
 }> = ({
   categoryData,
   productData,
   handleDeleteProduct,
-  handleDeleteCategory,
   handleEditProduct,
+  handleDuplicateProduct,
+  handleDeleteCategory,
+  handleEditCategory,
+  handleDuplicateCategory,
 }) => {
   return (
     <>
@@ -31,6 +38,8 @@ const Content: React.FC<{
               <ManageCategories
                 categoryData={categoryData}
                 handleDeleteCategory={handleDeleteCategory}
+                handleEditCategory={handleEditCategory}
+                handleDuplicateCategory={handleDuplicateCategory}
               />
             }
           />
@@ -41,6 +50,7 @@ const Content: React.FC<{
                 productData={productData}
                 handleDeleteProduct={handleDeleteProduct}
                 handleEditProduct={handleEditProduct}
+                handleDuplicateProduct={handleDuplicateProduct}
               />
             }
           />

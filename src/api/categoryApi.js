@@ -5,14 +5,14 @@ export const categoryApi = {
     return axiosClient.get(url);
   },
 
-  // create:(data)=>{
-  //   const url = "/posts";
-  //   return axiosClient.post(url, data);
-  // },
-  // update:(id, data)=>{
-  //   const url = `/posts/${id}`;
-  //   return axiosClient.patch(url, data);
-  // },
+  createCategory: (data) => {
+    const url = "/categories";
+    return axiosClient.post(url, data);
+  },
+  updateCategory: (id, data) => {
+    const url = `/categories/${id}`;
+    return axiosClient.put(url, data);
+  },
   deleteCategory: (id) => {
     const url = `/categories/${id}`;
     return axiosClient.delete(url);

@@ -1,49 +1,341 @@
 import React, { useState } from "react";
-export interface Product {
-  id: string;
-  name: string;
-  uri: string;
-  description: string;
-  image_source: string;
-  category_id: string;
-  price: number;
-  modified_at: number;
-}
+import { TProduct } from "../../../types/Product";
 const ManageProducts: React.FC<{
-  productData: Product[];
+  productData: TProduct[];
   handleDeleteProduct: (id: string) => void;
-  handleEditProduct: (product: Product) => void;
-}> = ({ productData, handleDeleteProduct, handleEditProduct }) => {
+  handleEditProduct: (product: TProduct) => void;
+  handleDuplicateProduct: (product: TProduct) => void;
+}> = ({
+  productData,
+  handleDeleteProduct,
+  handleEditProduct,
+  handleDuplicateProduct,
+}) => {
+  const [btnSelected, setBtnSelected] = useState<string>("none");
+  const [categorySelected, setCategorySelected] = useState<TProduct>({
+    id: "",
+    name: "",
+    uri: "",
+    description: "",
+    image_source: "",
+    category_id: "",
+    price: 0,
+    modified_at: 0,
+  });
+
   const formatTimeStamp = (timestamp: number): string => {
     const date = new Date(timestamp * 1000);
     return date.toLocaleString();
   };
-  const [isEdit, setIsEdit] = useState(false);
+
   return (
     <>
-      {isEdit === true ? (
+      {btnSelected === "Edit" ? (
         <>
           <section className="fixed top-0 left-0 z-[999] w-[100vw] h-[100vh] bg-black opacity-[0.5]"></section>
-          <form className="fixed flex flex-col z-[1000] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[40vw] h-[90vh] p-[2rem] text-black bg-white">
-            <h2 className="relative w-fit top-0 left-[50%] translate-x-[-50%] text-[4rem]">
+          <form
+            className="fixed flex flex-col z-[1000] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[40vw] h-[95vh] p-[2rem] text-black bg-white"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleEditProduct(categorySelected);
+            }}
+          >
+            <h2 className="relative w-fit top-0 left-[50%] translate-x-[-50%] text-[3rem]">
               Product
             </h2>
+            <button
+              className="fixed top-0 right-0 translate-x-[-50%] translate-y-[50%]  w-[2rem] h-[2rem]"
+              onClick={() => {
+                setBtnSelected("none");
+              }}
+            >
+              <svg
+                className="w-full h-full"
+                width="24"
+                height="24"
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z"
+                  fill="none"
+                  stroke="#000000"
+                  strokeWidth="4"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M29.6567 18.3432L18.343 29.6569"
+                  stroke="#000000"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M18.3433 18.3432L29.657 29.6569"
+                  stroke="#000000"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
 
-            <label htmlFor="">ID</label>
-            <input type="text" />
-            <label htmlFor="">NAME</label>
-            <input type="text" />
-            <label htmlFor="">URI</label>
-            <input type="text" />
-            <label htmlFor="">DESCRIPTION</label>
-            <input type="text" />
-            <label htmlFor="">IMGAGE SOURCE</label>
-            <input type="text" />
-            <figure>
-              <input type="text" />
-              <img src="" alt="" />
-            </figure>
-            <button className="relative bot-0 left-[50%] translate-x-[-50%] w-[20%] h-[5rem] border-solid border-[2px] border-black">
+            <div className="flex flex-col  gap-[10px]">
+              <label htmlFor="">ID</label>
+              <input
+                className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="text"
+                placeholder="ID"
+                value={categorySelected.id}
+                readOnly
+              />
+              <label htmlFor="">NAME</label>
+              <input
+                className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="text"
+                placeholder="NAME"
+                value={categorySelected.name}
+                onChange={(e) => {
+                  setCategorySelected((prevProduct) => ({
+                    ...prevProduct,
+                    name: e.target.value,
+                  }));
+                }}
+              />
+              <label htmlFor="">CATEGORY ID</label>
+              <input
+                className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="text"
+                placeholder="CATEGORY ID"
+                value={categorySelected.category_id}
+                onChange={(e) => {
+                  setCategorySelected((prevProduct) => ({
+                    ...prevProduct,
+                    category_id: e.target.value,
+                  }));
+                }}
+              />
+              <label htmlFor="">URI</label>
+              <input
+                className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="text"
+                placeholder="URI"
+                value={categorySelected.uri}
+                onChange={(e) => {
+                  setCategorySelected((prevProduct) => ({
+                    ...prevProduct,
+                    uri: e.target.value,
+                  }));
+                }}
+              />
+              <label htmlFor="">DESCRIPTION</label>
+              <input
+                className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="text"
+                placeholder="DESCRIPTION"
+                value={categorySelected.description}
+                onChange={(e) => {
+                  setCategorySelected((prevProduct) => ({
+                    ...prevProduct,
+                    description: e.target.value,
+                  }));
+                }}
+              />
+              <label htmlFor="">PRICE</label>
+              <input
+                className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="number"
+                placeholder="PRICE"
+                value={categorySelected.price}
+                onChange={(e) => {
+                  setCategorySelected((prevProduct) => ({
+                    ...prevProduct,
+                    price: e.target.valueAsNumber,
+                  }));
+                }}
+              />
+              <label htmlFor="">IMGAGE SOURCE</label>
+              <input
+                className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="text"
+                placeholder="IMAGE SOURCE"
+                value={categorySelected.image_source}
+                onChange={(e) => {
+                  setCategorySelected((prevProduct) => ({
+                    ...prevProduct,
+                    image_source: e.target.value,
+                  }));
+                }}
+              />
+              <figure className="w-[30%] my-0 mx-auto">
+                <img
+                  className="w-full h-full"
+                  src={categorySelected.image_source}
+                  alt=""
+                />
+              </figure>
+            </div>
+            <button className="relative bot-0 left-[50%] translate-x-[-50%] w-[20%] h-[5rem] border-solid border-[2px] border-black rounded-[10px]">
+              SUBMIT
+            </button>
+          </form>
+        </>
+      ) : (
+        <></>
+      )}
+      {btnSelected === "Duplicate" ? (
+        <>
+          <section className="fixed top-0 left-0 z-[999] w-[100vw] h-[100vh] bg-black opacity-[0.5]"></section>
+          <form
+            className="fixed flex flex-col z-[1000] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[40vw] h-[95vh] p-[2rem] text-black bg-white"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleDuplicateProduct(categorySelected);
+            }}
+          >
+            <h2 className="relative w-fit top-0 left-[50%] translate-x-[-50%] text-[3rem]">
+              Product
+            </h2>
+            <button
+              className="fixed top-0 right-0 translate-x-[-50%] translate-y-[50%]  w-[2rem] h-[2rem]"
+              onClick={() => {
+                setBtnSelected("none");
+              }}
+            >
+              <svg
+                className="w-full h-full"
+                width="24"
+                height="24"
+                viewBox="0 0 48 48"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z"
+                  fill="none"
+                  stroke="#000000"
+                  strokeWidth="4"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M29.6567 18.3432L18.343 29.6569"
+                  stroke="#000000"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M18.3433 18.3432L29.657 29.6569"
+                  stroke="#000000"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+
+            <div className="flex flex-col  gap-[10px]">
+              <label htmlFor="">ID (CAREFUL: ID CANNOT DUPLICATE)</label>
+              <input
+                className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="text"
+                placeholder="ID"
+                value={categorySelected.id}
+                onChange={(e) => {
+                  setCategorySelected((prevProduct) => ({
+                    ...prevProduct,
+                    id: e.target.value,
+                  }));
+                }}
+              />
+              <label htmlFor="">NAME</label>
+              <input
+                className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="text"
+                placeholder="NAME"
+                value={categorySelected.name}
+                onChange={(e) => {
+                  setCategorySelected((prevProduct) => ({
+                    ...prevProduct,
+                    name: e.target.value,
+                  }));
+                }}
+              />
+              <label htmlFor="">CATEGORY ID</label>
+              <input
+                className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="text"
+                placeholder="CATEGORY ID"
+                value={categorySelected.category_id}
+                onChange={(e) => {
+                  setCategorySelected((prevProduct) => ({
+                    ...prevProduct,
+                    category_id: e.target.value,
+                  }));
+                }}
+              />
+              <label htmlFor="">URI</label>
+              <input
+                className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="text"
+                placeholder="URI"
+                value={categorySelected.uri}
+                onChange={(e) => {
+                  setCategorySelected((prevProduct) => ({
+                    ...prevProduct,
+                    uri: e.target.value,
+                  }));
+                }}
+              />
+              <label htmlFor="">DESCRIPTION</label>
+              <input
+                className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="text"
+                placeholder="DESCRIPTION"
+                value={categorySelected.description}
+                onChange={(e) => {
+                  setCategorySelected((prevProduct) => ({
+                    ...prevProduct,
+                    description: e.target.value,
+                  }));
+                }}
+              />
+              <label htmlFor="">PRICE</label>
+              <input
+                className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="number"
+                placeholder="PRICE"
+                value={categorySelected.price}
+                onChange={(e) => {
+                  setCategorySelected((prevProduct) => ({
+                    ...prevProduct,
+                    price: e.target.valueAsNumber,
+                  }));
+                }}
+              />
+              <label htmlFor="">IMGAGE SOURCE</label>
+              <input
+                className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="text"
+                placeholder="IMAGE SOURCE"
+                value={categorySelected.image_source}
+                onChange={(e) => {
+                  setCategorySelected((prevProduct) => ({
+                    ...prevProduct,
+                    image_source: e.target.value,
+                  }));
+                }}
+              />
+              <figure className="w-[30%] my-0 mx-auto">
+                <img
+                  className="w-full h-full"
+                  src={categorySelected.image_source}
+                  alt=""
+                />
+              </figure>
+            </div>
+            <button className="relative bot-0 left-[50%] translate-x-[-50%] w-[20%] h-[5rem] border-solid border-[2px] border-black rounded-[10px]">
               SUBMIT
             </button>
           </form>
@@ -103,7 +395,8 @@ const ManageProducts: React.FC<{
                   <button
                     className="p-[7px] border-solid border-[2px]"
                     onClick={() => {
-                      setIsEdit(true);
+                      setBtnSelected("Edit");
+                      setCategorySelected(product);
                     }}
                   >
                     <svg
@@ -192,7 +485,13 @@ const ManageProducts: React.FC<{
                     </svg>
                   </button>
 
-                  <button className="p-[7px] border-solid border-[2px]">
+                  <button
+                    className="p-[7px] border-solid border-[2px]"
+                    onClick={() => {
+                      setBtnSelected("Duplicate");
+                      setCategorySelected(product);
+                    }}
+                  >
                     <svg
                       width="24"
                       height="24"

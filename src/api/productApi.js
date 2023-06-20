@@ -4,14 +4,14 @@ export const productApi = {
     const url = "/products";
     return axiosClient.get(url);
   },
-  // create:(data)=>{
-  //   const url = "/posts";
-  //   return axiosClient.post(url, data);
-  // },
-  // update:(id, data)=>{
-  //   const url = `/posts/${id}`;
-  //   return axiosClient.patch(url, data);
-  // },
+  createProduct: (data) => {
+    const url = "/products";
+    return axiosClient.post(url, data);
+  },
+  updateProduct: (id, data) => {
+    const url = `/products/${id}`;
+    return axiosClient.put(url, data);
+  },
   deleteProduct: (id) => {
     const url = `/products/${id}`;
     return axiosClient.delete(url);
