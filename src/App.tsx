@@ -1,22 +1,14 @@
-import { useEffect } from "react"
-import Main from "./assets/layouts/Main/Main"
-import Sidebar from "./assets/layouts/Sidebar/Sidebar"
+import { useEffect } from "react";
+import Main from "./assets/layouts/Main/Main";
+import Sidebar from "./assets/layouts/Sidebar/Sidebar";
+import Login from "./assets/layouts/Login/Login";
 
 function App() {
-  useEffect(()=>{
-    (async()=>{
-      try {
-      } catch (error) {
-        
-      }
-    })
-  })
   return (
     <>
-      <Sidebar />
-      <Main />
+      <Login />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
