@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Header from "../../sections/Header/Header.js";
 import Content from "../../sections/Content/Content.js";
-import { productApi } from "../../../api/productApi.js";
-import { categoryApi } from "../../../api/categoryApi.js";
+import { productApi } from "../../../api/productApi.ts";
+import { categoryApi } from "../../../api/categoryApi.ts";
 import { TProduct } from "../../types/Product.js";
 import { TCategory } from "../../types/Category.js";
 
