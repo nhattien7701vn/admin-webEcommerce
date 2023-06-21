@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../sections/Header/Header.js";
 import Content from "../../sections/Content/Content.js";
 import { productApi } from "../../../api/productApi.js";

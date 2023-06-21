@@ -1,5 +1,3 @@
-import React from "react";
-
 const ManageUsers = () => {
   return (
     <section className="flex justify-between w-full h-screen bg-[#909090]">

@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Chart = () => {
   return (
     <section className="flex flex-wrap gap-[4rem] justify-between w-full">

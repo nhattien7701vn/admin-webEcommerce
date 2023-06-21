@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Header = () => {
   return (
     <header className="sticky top-0 flex justify-between items-center h-[70px] px-[3rem] bg-[#f0f0f0] border-solid border-b-2 border-[#d7d6d6] ">

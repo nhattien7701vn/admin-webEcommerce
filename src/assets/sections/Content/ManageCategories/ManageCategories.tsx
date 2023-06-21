@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { render } from "react-dom";
 import { TCategory } from "../../../types/Category";
 
 const ManageCategories: React.FC<{
