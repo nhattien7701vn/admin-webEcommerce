@@ -6,7 +6,9 @@ import Login from "./assets/layouts/Login/Login";
 function App() {
   return (
     <>
-      <Login />
+      {/* <Login /> */}
+    <Main></Main>
+    <Sidebar></Sidebar>
     </>
   );
 }
