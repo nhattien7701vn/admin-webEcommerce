@@ -4,7 +4,10 @@ export interface TProduct {
   uri: string;
   description: string;
   image_source: string;
-  category_id: string;
+  sub_category_id: string;
   price: number;
+  flash_sale: boolean,
+  flash_price: number,
+  created_at: number,
   modified_at: number;
 }

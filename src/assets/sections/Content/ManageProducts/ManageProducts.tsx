@@ -12,14 +12,17 @@ const ManageProducts: React.FC<{
   handleDuplicateProduct,
 }) => {
   const [btnSelected, setBtnSelected] = useState<string>("none");
-  const [categorySelected, setCategorySelected] = useState<TProduct>({
+  const [productSelected, setProductSelected] = useState<TProduct>({
     id: "",
     name: "",
     uri: "",
     description: "",
     image_source: "",
-    category_id: "",
+    sub_category_id: "",
     price: 0,
+    flash_sale: false,
+    flash_price: 0,
+    created_at: 0,
     modified_at: 0,
   });
 
@@ -34,15 +37,13 @@ const ManageProducts: React.FC<{
         <>
           <section className="fixed top-0 left-0 z-[999] w-[100vw] h-[100vh] bg-black opacity-[0.5]"></section>
           <form
-            className="fixed flex flex-col z-[1000] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[40vw] h-[95vh] p-[2rem] text-black bg-white"
+            className="fixed flex flex-col z-[1000] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[40vw] h-[95vh] py-[1rem] px-[2rem] text-black bg-white"
             onSubmit={(e) => {
               e.preventDefault();
-              handleEditProduct(categorySelected);
+              handleEditProduct(productSelected);
             }}
           >
-            <h2 className="relative w-fit top-0 left-[50%] translate-x-[-50%] text-[3rem]">
-              Product
-            </h2>
+            <h2 className="w-fit mx-auto text-[2rem]">Product</h2>
             <button
               className="fixed top-0 right-0 translate-x-[-50%] translate-y-[50%]  w-[2rem] h-[2rem]"
               onClick={() => {
@@ -81,88 +82,132 @@ const ManageProducts: React.FC<{
               </svg>
             </button>
 
-            <div className="flex flex-col  gap-[10px]">
-              <label htmlFor="">ID</label>
+            <div className="flex flex-col gap-[5px]">
+              <label className="text-[15px]" htmlFor="">
+                ID
+              </label>
               <input
                 className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
                 type="text"
                 placeholder="ID"
-                value={categorySelected.id}
+                value={productSelected.id}
                 readOnly
               />
-              <label htmlFor="">NAME</label>
+              <label className="text-[15px]" htmlFor="">
+                NAME
+              </label>
               <input
                 className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
                 type="text"
                 placeholder="NAME"
-                value={categorySelected.name}
+                value={productSelected.name}
                 onChange={(e) => {
-                  setCategorySelected((prevProduct) => ({
+                  setProductSelected((prevProduct) => ({
                     ...prevProduct,
                     name: e.target.value,
                   }));
                 }}
               />
-              <label htmlFor="">CATEGORY ID</label>
+              <label className="text-[15px]" htmlFor="">
+                SUB CATEGORY ID
+              </label>
               <input
                 className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
                 type="text"
-                placeholder="CATEGORY ID"
-                value={categorySelected.category_id}
+                placeholder="SUB CATEGORY ID"
+                value={productSelected.sub_category_id}
                 onChange={(e) => {
-                  setCategorySelected((prevProduct) => ({
+                  setProductSelected((prevProduct) => ({
                     ...prevProduct,
                     category_id: e.target.value,
                   }));
                 }}
               />
-              <label htmlFor="">URI</label>
+              <label className="text-[15px]" htmlFor="">
+                URI
+              </label>
               <input
                 className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
                 type="text"
                 placeholder="URI"
-                value={categorySelected.uri}
+                value={productSelected.uri}
                 onChange={(e) => {
-                  setCategorySelected((prevProduct) => ({
+                  setProductSelected((prevProduct) => ({
                     ...prevProduct,
                     uri: e.target.value,
                   }));
                 }}
               />
-              <label htmlFor="">DESCRIPTION</label>
+              <label className="text-[15px]" htmlFor="">
+                DESCRIPTION
+              </label>
               <input
                 className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
                 type="text"
                 placeholder="DESCRIPTION"
-                value={categorySelected.description}
+                value={productSelected.description}
                 onChange={(e) => {
-                  setCategorySelected((prevProduct) => ({
+                  setProductSelected((prevProduct) => ({
                     ...prevProduct,
                     description: e.target.value,
                   }));
                 }}
               />
-              <label htmlFor="">PRICE</label>
+              <label className="text-[15px]" htmlFor="">
+                PRICE
+              </label>
               <input
                 className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
                 type="number"
                 placeholder="PRICE"
-                value={categorySelected.price}
+                value={productSelected.price}
                 onChange={(e) => {
-                  setCategorySelected((prevProduct) => ({
+                  setProductSelected((prevProduct) => ({
                     ...prevProduct,
                     price: e.target.valueAsNumber,
                   }));
                 }}
               />
-              <label htmlFor="">IMGAGE SOURCE</label>
+              <label className="text-[15px]" htmlFor="">
+                FLASH SALE
+              </label>
+              <input
+                className="w-[30px] h-[30px] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="checkbox"
+                placeholder="PRICE"
+                checked={productSelected.flash_sale}
+                onChange={(e) => {
+                  setProductSelected((prevProduct) => ({
+                    ...prevProduct,
+                    flash_sale: !prevProduct.flash_sale,
+                  }));
+                }}
+              />
+              <label className="text-[15px]" htmlFor="">
+                FLASH PRICE
+              </label>
+              <input
+                className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
+                type="number"
+                placeholder="PRICE"
+                value={productSelected.flash_price}
+                onChange={(e) => {
+                  setProductSelected((prevProduct) => ({
+                    ...prevProduct,
+                    flash_price: e.target.valueAsNumber,
+                  }));
+                }}
+              />
+              <label className="text-[15px]" htmlFor="">
+                IMGAGE SOURCE
+              </label>
               <input
                 className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
                 type="text"
                 placeholder="IMAGE SOURCE"
-                value={categorySelected.image_source}
+                value={productSelected.image_source}
                 onChange={(e) => {
-                  setCategorySelected((prevProduct) => ({
+                  setProductSelected((prevProduct) => ({
                     ...prevProduct,
                     image_source: e.target.value,
                   }));
@@ -171,7 +216,7 @@ const ManageProducts: React.FC<{
               <figure className="w-[30%] my-0 mx-auto">
                 <img
                   className="w-full h-full"
-                  src={categorySelected.image_source}
+                  src={productSelected.image_source}
                   alt=""
                 />
               </figure>
@@ -188,15 +233,13 @@ const ManageProducts: React.FC<{
         <>
           <section className="fixed top-0 left-0 z-[999] w-[100vw] h-[100vh] bg-black opacity-[0.5]"></section>
           <form
-            className="fixed flex flex-col z-[1000] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[40vw] h-[95vh] p-[2rem] text-black bg-white"
+            className="fixed flex flex-col z-[1000] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[40vw] h-[95vh] py-[1rem] px-[2rem] text-black bg-white"
             onSubmit={(e) => {
               e.preventDefault();
-              handleDuplicateProduct(categorySelected);
+              handleDuplicateProduct(productSelected);
             }}
           >
-            <h2 className="relative w-fit top-0 left-[50%] translate-x-[-50%] text-[3rem]">
-              Product
-            </h2>
+            <h2 className="mx-auto w-fit text-[2rem]">Product</h2>
             <button
               className="fixed top-0 right-0 translate-x-[-50%] translate-y-[50%]  w-[2rem] h-[2rem]"
               onClick={() => {
@@ -235,93 +278,107 @@ const ManageProducts: React.FC<{
               </svg>
             </button>
 
-            <div className="flex flex-col  gap-[10px]">
-              <label htmlFor="">ID (CAREFUL: ID CANNOT DUPLICATE)</label>
+            <div className="flex flex-col  gap-[5px]">
+              <label className="text-[15px]" htmlFor="">
+                ID (CAREFUL: ID CANNOT DUPLICATE)
+              </label>
               <input
                 className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
                 type="text"
                 placeholder="ID"
-                value={categorySelected.id}
+                value={productSelected.id}
                 onChange={(e) => {
-                  setCategorySelected((prevProduct) => ({
+                  setProductSelected((prevProduct) => ({
                     ...prevProduct,
                     id: e.target.value,
                   }));
                 }}
               />
-              <label htmlFor="">NAME</label>
+              <label className="text-[15px]" htmlFor="">
+                NAME
+              </label>
               <input
                 className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
                 type="text"
                 placeholder="NAME"
-                value={categorySelected.name}
+                value={productSelected.name}
                 onChange={(e) => {
-                  setCategorySelected((prevProduct) => ({
+                  setProductSelected((prevProduct) => ({
                     ...prevProduct,
                     name: e.target.value,
                   }));
                 }}
               />
-              <label htmlFor="">CATEGORY ID</label>
+              <label className="text-[15px]" htmlFor="">
+                SUB CATEGORY ID
+              </label>
               <input
                 className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
                 type="text"
-                placeholder="CATEGORY ID"
-                value={categorySelected.category_id}
+                placeholder="SUB CATEGORY ID"
+                value={productSelected.sub_category_id}
                 onChange={(e) => {
-                  setCategorySelected((prevProduct) => ({
+                  setProductSelected((prevProduct) => ({
                     ...prevProduct,
                     category_id: e.target.value,
                   }));
                 }}
               />
-              <label htmlFor="">URI</label>
+              <label className="text-[15px]" htmlFor="">
+                URI
+              </label>
               <input
                 className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
                 type="text"
                 placeholder="URI"
-                value={categorySelected.uri}
+                value={productSelected.uri}
                 onChange={(e) => {
-                  setCategorySelected((prevProduct) => ({
+                  setProductSelected((prevProduct) => ({
                     ...prevProduct,
                     uri: e.target.value,
                   }));
                 }}
               />
-              <label htmlFor="">DESCRIPTION</label>
+              <label className="text-[15px]" htmlFor="">
+                DESCRIPTION
+              </label>
               <input
                 className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
                 type="text"
                 placeholder="DESCRIPTION"
-                value={categorySelected.description}
+                value={productSelected.description}
                 onChange={(e) => {
-                  setCategorySelected((prevProduct) => ({
+                  setProductSelected((prevProduct) => ({
                     ...prevProduct,
                     description: e.target.value,
                   }));
                 }}
               />
-              <label htmlFor="">PRICE</label>
+              <label className="text-[15px]" htmlFor="">
+                PRICE
+              </label>
               <input
                 className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
                 type="number"
                 placeholder="PRICE"
-                value={categorySelected.price}
+                value={productSelected.price}
                 onChange={(e) => {
-                  setCategorySelected((prevProduct) => ({
+                  setProductSelected((prevProduct) => ({
                     ...prevProduct,
                     price: e.target.valueAsNumber,
                   }));
                 }}
               />
-              <label htmlFor="">IMGAGE SOURCE</label>
+              <label className="text-[15px]" htmlFor="">
+                IMGAGE SOURCE
+              </label>
               <input
                 className="w-[100%] px-[5px] border-solid border-[1px] border-black rounded-[5px] text-[20px]"
                 type="text"
                 placeholder="IMAGE SOURCE"
-                value={categorySelected.image_source}
+                value={productSelected.image_source}
                 onChange={(e) => {
-                  setCategorySelected((prevProduct) => ({
+                  setProductSelected((prevProduct) => ({
                     ...prevProduct,
                     image_source: e.target.value,
                   }));
@@ -330,7 +387,7 @@ const ManageProducts: React.FC<{
               <figure className="w-[30%] my-0 mx-auto">
                 <img
                   className="w-full h-full"
-                  src={categorySelected.image_source}
+                  src={productSelected.image_source}
                   alt=""
                 />
               </figure>
@@ -343,12 +400,24 @@ const ManageProducts: React.FC<{
       ) : (
         <></>
       )}
-      <section className="flex justify-between w-full bg-[#909090]">
+      <section className="flex flex-col justify-between w-full ">
+        <h1 className="text-[3rem]">Product</h1>
+        <div>
+          <form className="flex ">
+            <input type="text" />
+            <select name="cars" id="cars">
+              <option value="volvo">sub_cate</option>
+            </select>{" "}
+            <p>0-5m</p>
+            <input type="range" min="0" max="50" />
+            <button></button>
+          </form>
+        </div>
         <ul className="flex flex-col gap-[1rem] w-full h-full">
           {productData.map((product) => (
             <>
-              <li className="flex gap-[10px] w-full">
-                <span className="w-[87%] h-full p-[1rem] bg-black text-white">
+              <li className="flex gap-[10px] w-full border-solid border-[2px] border-black rounded-[7px]">
+                <span className="w-[87%] h-full p-[1rem] text-black">
                   <span className="flex gap-[1rem] items-center w-full h-full ">
                     {/* {product.stt} */}
                     <p className="w-[3%]  text-center">1</p>
@@ -396,7 +465,7 @@ const ManageProducts: React.FC<{
                     className="p-[7px] border-solid border-[2px]"
                     onClick={() => {
                       setBtnSelected("Edit");
-                      setCategorySelected(product);
+                      setProductSelected(product);
                     }}
                   >
                     <svg
@@ -489,7 +558,7 @@ const ManageProducts: React.FC<{
                     className="p-[7px] border-solid border-[2px]"
                     onClick={() => {
                       setBtnSelected("Duplicate");
-                      setCategorySelected(product);
+                      setProductSelected(product);
                     }}
                   >
                     <svg

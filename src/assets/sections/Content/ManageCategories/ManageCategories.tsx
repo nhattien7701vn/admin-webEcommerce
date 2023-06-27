@@ -247,8 +247,8 @@ const ManageCategories: React.FC<{
       ) : (
         <></>
       )}
-
-      <section className="flex justify-between w-full h-screen bg-[#909090]">
+      <h1 className="text-[3rem]">Product</h1>
+      <section className="flex flex-col justify-between w-full ">
         <ul className="flex flex-col gap-[1rem] w-full h-full">
           {categoryData.map((category) => (
             <>
