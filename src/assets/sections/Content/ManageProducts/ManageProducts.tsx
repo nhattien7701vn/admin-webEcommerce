@@ -176,7 +176,7 @@ const ManageProducts: React.FC<{
                 type="checkbox"
                 placeholder="PRICE"
                 checked={productSelected.flash_sale}
-                onChange={(e) => {
+                onChange={() => {
                   setProductSelected((prevProduct) => ({
                     ...prevProduct,
                     flash_sale: !prevProduct.flash_sale,
