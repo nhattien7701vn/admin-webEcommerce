@@ -29,7 +29,7 @@ const Content: React.FC<{
 }) => {
   return (
     <>
-      <section className="flex-grow px-[6rem] py-[3rem]">
+      <section className="flex-grow px-[6rem] py-[2rem]">
         <Routes>
           <Route path="/" element={<Chart />} />
           <Route
